@@ -24,6 +24,7 @@ public partial class MainPage : ContentPage
 			"🦉", "🦉",
 			"🦩", "🦩"
 		];
+		//TODO: Add more animals
 
 		foreach (var button in AnimalButtons.Children.OfType<Button>())
 		{
@@ -32,6 +33,29 @@ public partial class MainPage : ContentPage
 			button.Text = nextEmoji;
 			animalEmoji.RemoveAt(index);
 		}
+		
+		Dispatcher.StartTimer(TimeSpan.FromSeconds(0.1), TimerTick);
+	}
+	
+	//TODO: Keep track of "best" time
+	//TODO: Add a countdown timer to give a time limit 
+
+	int tenthsOfSecondsElapsed = 0;
+	private bool TimerTick()
+	{
+		if (!this.IsLoaded) return false;
+		
+		tenthsOfSecondsElapsed++;
+		
+		TimeElapsed.Text = "Time Elapsed: " + (tenthsOfSecondsElapsed / 10F).ToString("0.0s");
+
+		if (PlayAgainButton.IsVisible)
+		{
+			tenthsOfSecondsElapsed = 0;
+			return false;
+		}
+		
+		return true;
 	}
 
 	Button lastClicked;
